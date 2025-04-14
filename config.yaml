@@ -1,0 +1,41 @@
+# 实验名称
+experimentName: CRE  # 这是你的实验名称，可以自定义 
+
+# 每次并发执行的试验数量
+trialConcurrency: 1  # 这里设置每次可以并发执行的试验数，设为 2 表示每次并发执行两个试验 
+
+# 搜索空间配置文件路径
+searchSpaceFile: search_space.json  # 指定搜索空间配置文件，包含超参数搜索空间定义，格式为 JSON 
+
+# 实验工作目录
+experimentWorkingDirectory: ./logs  # 指定实验的工作目录，实验的日志和相关文件会保存在这里 
+
+# 日志记录级别
+logLevel: info  # 日志记录的级别 可选的值有 'debug'、'info'、'warning'、'error'、'critical' 
+
+# 是否使用注解（例如，记录实验、试验参数等的注释信息）
+useAnnotation: false  # 如果设置为 true，NNI 会在实验结果中使用注解进行记录 
+
+# 试验命令，指向你想要运行的脚本
+trialCommand: bash TACRED.sh 1 # 这是每个试验执行的命令，可以根据你的实际需求修改 这里表示每个试验会运行 `bash TACRED.sh 1`
+
+# 试验代码所在的目录
+trialCodeDirectory: .  # 指定试验代码所在的目录，通常是你的项目根目录，`.` 表示当前目录 
+
+# 每个试验使用的 GPU 数量
+trialGpuNumber: 1  # 每个试验使用的 GPU 数量 这里设置为 1 表示每个试验使用 1 个 GPU 
+
+tuner:
+  # 使用的调优算法
+  name: TPE  # TPE (Tree-structured Parzen Estimator) 是一种常见的超参数优化算法 
+  classArgs:
+    # TPE 的优化模式：最大化或最小化
+    optimize_mode: maximize  # 设置为 'maximize' 表示优化目标是最大化，例如准确率 可选值为 'minimize' 和 'maximize' 
+
+# 训练服务配置
+trainingService:
+  platform: local  # 指定训练平台，这里是本地平台 可以改为其他平台如云端等 
+  gpuIndices:
+    - 0  # 训练服务使用的 GPU 索引 这里使用 GPU 0 可以指定多个 GPU 索引 
+  maxTrialNumberPerGpu: 2  # 每个 GPU 上最多同时运行的试验数 这里设置为 2，表示 GPU 0 上最多同时运行 2 个试验 
+  useActiveGpu: true  # 如果设置为 true，NNI 将会自动使用正在活跃的 GPU 进行试验 
