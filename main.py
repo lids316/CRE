@@ -24,9 +24,6 @@ yellow_print = "\033[1;33;40m"
 green_print = "\033[1;32;40m"
 
 
-
-
-
 def evaluate(config, test_data, seen_relations, rel2id, model=None):
     model.eval()
     num = len(test_data)
